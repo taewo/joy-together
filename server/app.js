@@ -3,9 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Person = require('./models/person');
+const cors = require('cors');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 
 const port = process.env.PORT || 4000;
 

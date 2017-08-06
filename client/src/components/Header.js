@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
+import axios from 'axios';
 
 class Header extends Component {
   constructor(props) {
@@ -9,6 +10,14 @@ class Header extends Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.axiosCall = this.axiosCall.bind(this);
+  }
+
+  axiosCall() {
+    axios.get('http://localhost:4000/api/persons')
+    .then((res) => {
+      console.log(321, res.data);
+    })
   }
 
   handleOpenModal() {
@@ -30,7 +39,12 @@ class Header extends Component {
           >
             Add
           </button>
-          <button className="btn">Random</button>
+          <button
+            className="btn"
+            onClick={this.axiosCall}
+          >
+            Random
+          </button>
         </div>
         <div>
           <ReactModal
