@@ -19,6 +19,7 @@ db.once('open', () => {
   console.log('mongo connection Success!');
 });
 
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/joytogether');
 
 const server = app.listen(port, () => {

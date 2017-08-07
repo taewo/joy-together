@@ -11,9 +11,13 @@ module.exports = (app, Person) => {
 
   // CREATE PERSON
   app.post('/api/persons', (req, res) => {
+    // console.log(123, req);
     const person = new Person();
+    console.log('person', person)
+    console.log(321, req.body);
     person.name = req.body.name;
     person.age = req.body.age;
+    console.log(123, person.name, person.age);
 
     person.save((err) => {
       if (err) {
@@ -33,6 +37,17 @@ module.exports = (app, Person) => {
         return res.status(500).json({ error: 'Delete db failure' });
       }
       res.json({ message: 'person deleted' });
+    });
+  });
+
+  // DELETE PEOPLE
+  app.delete('/api/people', (req, res) => {
+    console.log('delete in');
+    Person.remove({}, (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: 'Delete All data fail' });
+      }
+      res.json({ message: 'people deleted' });
     });
   });
 };

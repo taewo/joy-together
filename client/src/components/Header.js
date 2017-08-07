@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import * as addAction from '../action/addAction';
 
 class Header extends Component {
   constructor(props) {
@@ -10,14 +12,22 @@ class Header extends Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.axiosCall = this.axiosCall.bind(this);
+    this.getAllData = this.getAllData.bind(this);
+    this.resetAllData = this.resetAllData.bind(this);
   }
 
-  axiosCall() {
+  resetAllData() {
+    axios.delete('http://localhost:4000/api/people/')
+    .then((res) => {
+      console.log(123, res);
+    });
+  }
+
+  getAllData() {
     axios.get('http://localhost:4000/api/persons')
     .then((res) => {
       console.log(321, res.data);
-    })
+    });
   }
 
   handleOpenModal() {
@@ -25,7 +35,7 @@ class Header extends Component {
   }
 
   handleCloseModal() {
-    this.setState({ showModal: false});
+    this.setState({ showModal: false });
   }
 
   render() {
@@ -35,15 +45,21 @@ class Header extends Component {
         <div className="button">
           <button
             className="btn"
-            onClick={this.handleOpenModal}
+            onClick={this.props.getDataFunc}
           >
             Add
           </button>
           <button
             className="btn"
-            onClick={this.axiosCall}
+            onClick={this.getAllData}
           >
             Random
+          </button>
+          <button
+            className="btn"
+            onClick={this.resetAllData}
+          >
+            Reset
           </button>
         </div>
         <div>
@@ -52,6 +68,7 @@ class Header extends Component {
             overlayClassName="overlay"
             isOpen={this.state.showModal}
             onRequestClose={this.handleCloseModal}
+            contentLabel="Modal"
           >
           <button
             onClick={this.handleCloseModal}
@@ -65,4 +82,12 @@ class Header extends Component {
   }
 }
 
-export default Header;
+// const mapStateToProps = state => ({
+//   data: state.data,
+// });
+
+const mapDispatchToProps = dispatch => ({
+  getDataFunc: () => { dispatch(addAction.getDataFunc()); },
+});
+
+export default connect(null, mapDispatchToProps)(Header);
