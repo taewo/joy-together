@@ -14,6 +14,8 @@ const store = createStore(
     applyMiddleware(thunk),
 ));
 
+store.subscribe(() => console.log(store.getState().form.simple.values));
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

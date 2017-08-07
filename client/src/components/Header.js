@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import * as addAction from '../action/addAction';
+import { Field, reduxForm } from 'redux-form'
+import * as getDataAction from '../action/getDataAction';
+
 
 class Header extends Component {
   constructor(props) {
@@ -12,23 +13,13 @@ class Header extends Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.getAllData = this.getAllData.bind(this);
-    this.resetAllData = this.resetAllData.bind(this);
   }
 
-  resetAllData() {
-    axios.delete('http://localhost:4000/api/people/')
-    .then((res) => {
-      console.log(123, res);
-    });
+  handleSubmit(e) {
+    // console.log('target', e.target.value);
+    e.preventDefault();
   }
 
-  getAllData() {
-    axios.get('http://localhost:4000/api/persons')
-    .then((res) => {
-      console.log(321, res.data);
-    });
-  }
 
   handleOpenModal() {
     this.setState({ showModal: true });
@@ -39,13 +30,14 @@ class Header extends Component {
   }
 
   render() {
+    const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <div className="header">
         Header
         <div className="button">
           <button
             className="btn"
-            onClick={this.props.getDataFunc}
+            onClick={this.handleOpenModal}
           >
             Add
           </button>
@@ -70,11 +62,27 @@ class Header extends Component {
             onRequestClose={this.handleCloseModal}
             contentLabel="Modal"
           >
-          <button
-            onClick={this.handleCloseModal}
-          >
-            ok
-          </button>
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label>First Name</label>
+              <div>
+                <Field
+                  name="firstName"
+                  component="input"
+                  type="text"
+                  placeholder="First Name"
+                />
+              </div>
+            </div>
+            <div>
+              <button type="submit" disabled={pristine || submitting} onClick={this.handleCloseModal}>
+                Submit
+              </button>
+              <button type="button" disabled={pristine || submitting} onClick={reset}>
+                Clear Values
+              </button>
+            </div>
+          </form>
           </ReactModal>
         </div>
       </div>
@@ -82,12 +90,15 @@ class Header extends Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   data: state.data,
-// });
-
 const mapDispatchToProps = dispatch => ({
-  getDataFunc: () => { dispatch(addAction.getDataFunc()); },
+  getDataFunc: () => { dispatch(getDataAction.getDataFunc()); },
 });
 
-export default connect(null, mapDispatchToProps)(Header);
+Header = connect(
+  null,
+  mapDispatchToProps,
+)(Header);
+
+export default reduxForm({
+  form: 'simple',
+})(Header);

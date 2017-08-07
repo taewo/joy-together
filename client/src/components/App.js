@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Header from './Header';
 import { connect } from 'react-redux';
+import Header from './Header';
+import Form from './Form';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
           <h1>
             data
           </h1>
+          <Form />
         </div>
       )
     }
@@ -27,7 +29,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.data,
+  data: state.getDataReducer.data,
 });
 
 export default connect(mapStateToProps, null)(App);
