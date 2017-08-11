@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import getDataReducer from './getDataReducer';
-import { reducer as formReducer } from 'redux-form';
+import addDataReducer from './addDataReducer';
 
 const reducer = combineReducers({
   getDataReducer,
-  form: formReducer,
+  addDataReducer,
 });
 
 export default reducer;

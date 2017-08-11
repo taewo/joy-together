@@ -1,15 +1,20 @@
 import * as types from '../action/ActionTypes';
 
 const initialState = {
-  data: [],
+  data: []
 };
 
 const getDataReducer = (state = initialState, action) => {
+  const {data} = state;
   switch (action.type) {
     case types.GET_DATA:
       return {
-        ...state,
-        data: action.data,
+        data: [
+          ...data,
+          {
+            name: action.data
+          }
+        ]
       };
     default:
       return state;

@@ -2,9 +2,9 @@ import axios from 'axios';
 import * as types from './ActionTypes';
 import { API_URL } from '../config';
 
-export const getData = data => ({
+export const getData = name => ({
   type: types.GET_DATA,
-  data,
+  name,
 });
 
 export function getDataFunc() {

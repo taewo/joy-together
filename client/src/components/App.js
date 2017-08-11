@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import Form from './Form';
+import Dashboard from './Dashboard';
 
 class App extends Component {
   render() {
@@ -10,10 +10,7 @@ class App extends Component {
       return (
         <div>
           <Header />
-          <h1>
-            data
-          </h1>
-          <Form />
+          <Dashboard />
         </div>
       )
     }
