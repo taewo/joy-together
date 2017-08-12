@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as action from '../action/getDataAction';
+import * as getDataAction from '../action/getDataAction';
 import getDataReducer from '../reducer/getDataReducer';
+import * as deleteDataAction from '../action/deleteDataAction';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -23,18 +24,26 @@ class Dashboard extends Component {
       } else {
         return this.props.data.map((data, i) => {
           return (
-            <div key={i}>
+            <div
+              key={i}
+              className="person"
+            >
               {data.name}
+              <input
+                type="button"
+                value="X"
+                className="remove_btn"
+                onClick={() => this.props.deleteDataFunc(data.name)}
+              />
             </div>
           );
         });
       }
     };
     return (
-      <div>
-        <h1>
-          Dashboard
-        </h1>
+      <div
+        className="personList"
+      >
         {renderData()}
       </div>
     );
@@ -46,7 +55,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDataFunc: () => { dispatch(action.getDataFunc()); },
+  getDataFunc: () => { dispatch(getDataAction.getDataFunc()); },
+  deleteDataFunc: (name) => { dispatch(deleteDataAction.deletePersonFunc(name)); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

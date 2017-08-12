@@ -18,13 +18,12 @@ class Header extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.nameInput.focus();
-  // }
-
   handleSubmit(e) {
+    if (this.state.name === ''){
+      e.preventDefault();
+      return;
+    }
     this.props.addDataFunc(this.state.name);
-    // alert(this.state.name);
     this.setState({
       name: '',
     });
@@ -45,6 +44,7 @@ class Header extends Component {
 
   handleCloseModal() {
     this.setState({ showModal: false });
+    this.setState({ name: '' });
   }
 
   render() {
@@ -90,6 +90,7 @@ class Header extends Component {
                   value={this.state.name}
                   onChange={this.handleChange}
                   name="name"
+                  placeholder="Type Name"
                 />
               </label>
               <input type="submit" value="Submit" />

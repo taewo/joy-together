@@ -40,3 +40,37 @@ body {
   bottom: 0;
   background-color: gray;
 }
+
+.personList {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.person {
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  /*text-align: center;*/
+  justify-content: center;
+  margin: 1rem;
+
+  background-color: gray;
+  color: white;
+  font-size: 3rem;
+  border-radius: 100%;
+  cursor: pointer;
+  user-select: none;
+}
+
+.remove_btn {
+  background-color: green;
+  border-radius: 100%;
+  outline: none;
+  display: inline-block;
+  border: solid black 1px;
+  cursor: wait;
+  transition: background-color 1s;
+}

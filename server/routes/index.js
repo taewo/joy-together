@@ -16,25 +16,32 @@ module.exports = (app, Person) => {
     console.log('person', person)
     console.log(321, req.body);
     person.name = req.body.name;
-    person.age = req.body.age;
-    console.log(123, person.name, person.age);
+    console.log(123, person);
 
-    person.save((err) => {
-      if (err) {
-        console.error(err);
-        res.json({ result: 0 });
-        return;
+    Person.find({name: req.body.name}, (err, docs) => {
+      if (docs.length) {
+        console.log('docs.length', docs)
+        res.send('Exiting data')
+      } else {
+        console.log('err', err)
+        person.save((err) => {
+          if (err) {
+            console.error(err);
+            res.json({ message: 'fail' });
+          }
+          res.json({ message: 'success' });
+        });
       }
-      res.json({ result: 1 });
-    });
+    })
+
   });
 
   // DELETE ONE PERSON
-  app.delete('/api/persons/:person_name', (req, res) => {
-    console.log(1, req.params);
-    Person.remove({ name: req.params.person_name }, (err, result) => {
+  app.delete('/api/persons', (req, res) => {
+    console.log('req', req.body);
+    Person.remove({ name: req.body.name }, (err, result) => {
       if (err) {
-        return res.status(500).json({ error: 'Delete db failure' });
+        return res.json({ error: 'Delete db failure' });
       }
       res.json({ message: 'person deleted' });
     });
