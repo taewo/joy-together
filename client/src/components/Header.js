@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactModal from 'react-modal';
 import { connect } from 'react-redux';
 import * as getDataAction from '../action/getDataAction';
+import * as deleteDataAction from '../action/deleteDataAction';
 import * as addDataAction from '../action/addDataAction';
 
 class Header extends Component {
@@ -16,6 +17,10 @@ class Header extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
+  // componentDidMount() {
+  //   this.nameInput.focus();
+  // }
 
   handleSubmit(e) {
     this.props.addDataFunc(this.state.name);
@@ -61,7 +66,7 @@ class Header extends Component {
           </button>
           <button
             className="btn"
-            onClick={this.resetAllData}
+            onClick={this.props.deletePeople}
           >
             Reset
           </button>
@@ -80,6 +85,7 @@ class Header extends Component {
               <label>
                 Name:
                 <input
+                  autoFocus
                   type="text"
                   value={this.state.name}
                   onChange={this.handleChange}
@@ -98,6 +104,7 @@ class Header extends Component {
 const mapDispatchToProps = dispatch => ({
   getDataFunc: () => { dispatch(getDataAction.getDataFunc()); },
   addDataFunc: (name) => { dispatch(addDataAction.addDataFunc(name)); },
+  deletePeople: () => { dispatch(deleteDataAction.deletePeopleFunc()); },
 });
 
 export default connect(null, mapDispatchToProps)(Header);

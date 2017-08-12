@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { API_URL } from '../config';
 import * as action from '../action/getDataAction';
 import getDataReducer from '../reducer/getDataReducer';
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    console.log('componentDidMount')
+    console.log('componentDidMount');
     this.props.getDataFunc();
   }
 
   render() {
     const renderData = () => {
-      const {data} = this.props;
-      console.log('value', this.props.data)
+      const { data } = this.props;
+      console.log('value', this.props.data);
       if (data === undefined || data.length === 0) {
-        console.log(3333333)
+        console.log(3333333);
         return (
           <h3>
-            not yet
+            Empty Data
           </h3>
         )
       } else {
@@ -32,10 +26,10 @@ class Dashboard extends Component {
             <div key={i}>
               {data.name}
             </div>
-          )
-        })
+          );
+        });
       }
-    }
+    };
     return (
       <div>
         <h1>

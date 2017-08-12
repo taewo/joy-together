@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as types from './ActionTypes';
-import * as action from './getDataAction';
+import * as getDataAction from './getDataAction';
 import { API_URL } from '../config';
 
 export const addData = name => ({
@@ -16,7 +16,7 @@ export function addDataFunc(name) {
     .then((res) => {
       console.log('Add data success');
       dispatch(addData(name));
-      dispatch(action.getDataFunc());
+      dispatch(getDataAction.getDataFunc());
     })
     .catch((err) => {
       console.warn('Add data err', err);

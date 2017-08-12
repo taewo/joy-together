@@ -5,7 +5,6 @@ const initialState = {
 };
 
 const getDataReducer = (state = initialState, action) => {
-  const {data} = state;
   switch (action.type) {
     case types.GET_DATA:
       return {
