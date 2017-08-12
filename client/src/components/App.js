@@ -5,21 +5,10 @@ import Dashboard from './Dashboard';
 
 class App extends Component {
   render() {
-    if (this.props.data) {
-      console.log(1, this.props.data)
-      return (
-        <div>
-          <Header />
-          <Dashboard />
-        </div>
-      )
-    }
     return (
       <div>
         <Header />
-        <h1>
-          App
-        </h1>
+        <Dashboard />
       </div>
     )
   }

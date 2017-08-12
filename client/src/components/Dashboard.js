@@ -2,38 +2,57 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { API_URL } from '../config';
-import * as action from '../action/addDataAction';
+import * as action from '../action/getDataAction';
+import getDataReducer from '../reducer/getDataReducer';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: ''
-    }
   }
 
-  // fetchData() {
-  //   axios.get(`${API_URL}`)
-  // }
+  componentDidMount() {
+    console.log('componentDidMount')
+    this.props.getDataFunc();
+  }
 
   render() {
+    const renderData = () => {
+      const {data} = this.props;
+      console.log('value', this.props.data)
+      if (data === undefined || data.length === 0) {
+        console.log(3333333)
+        return (
+          <h3>
+            not yet
+          </h3>
+        )
+      } else {
+        return this.props.data.map((data, i) => {
+          return (
+            <div key={i}>
+              {data.name}
+            </div>
+          )
+        })
+      }
+    }
     return (
       <div>
         <h1>
           Dashboard
         </h1>
-        <form>
-          name:
-          <input type="text" />
-          <input type="submit" value="Submit"/>
-        </form>
+        {renderData()}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onAddPerson: () => { dispatch(action.addDataFunc()); },
+const mapStateToProps = state => ({
+  data: state.getDataReducer.data,
 });
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+const mapDispatchToProps = dispatch => ({
+  getDataFunc: () => { dispatch(action.getDataFunc()); },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

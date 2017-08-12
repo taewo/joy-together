@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as getDataAction from '../action/getDataAction';
 import * as addDataAction from '../action/addDataAction';
 
-
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -19,13 +18,11 @@ class Header extends Component {
   }
 
   handleSubmit(e) {
-    console.log(321321, this.state.name);
     this.props.addDataFunc(this.state.name);
-    alert(this.state.name);
+    // alert(this.state.name);
     this.setState({
       name: '',
     });
-    e.preventDefault();
     this.setState({
       showModal: false,
     });

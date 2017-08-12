@@ -9,12 +9,7 @@ const getDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_DATA:
       return {
-        data: [
-          ...data,
-          {
-            name: action.data
-          }
-        ]
+        data: action.data,
       };
     default:
       return state;

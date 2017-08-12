@@ -29,7 +29,7 @@ module.exports = (app, Person) => {
     });
   });
 
-  // DELETE PERSON
+  // DELETE ONE PERSON
   app.delete('/api/persons/:person_name', (req, res) => {
     console.log(1, req.params);
     Person.remove({ name: req.params.person_name }, (err, result) => {
@@ -40,7 +40,7 @@ module.exports = (app, Person) => {
     });
   });
 
-  // DELETE PEOPLE
+  // DELETE ALL PEOPLE
   app.delete('/api/people', (req, res) => {
     console.log('delete in');
     Person.remove({}, (err, result) => {
