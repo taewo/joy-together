@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import * as getDataAction from '../action/getDataAction';
 import * as deleteDataAction from '../action/deleteDataAction';
@@ -11,12 +11,16 @@ class Header extends Component {
     super(props);
     this.state = {
       showModal: false,
+      checkModal: false,
       name: '',
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleOpenRandomCheckModal = this.handleOpenRandomCheckModal.bind(this);
+    this.handleCloseRandomCheckModal = this.handleCloseRandomCheckModal.bind(this);
+    this.handleRandomCheck = this.handleRandomCheck.bind(this);
   }
 
   handleSubmit(e) {
@@ -39,6 +43,7 @@ class Header extends Component {
     });
   }
 
+
   handleOpenModal() {
     this.setState({ showModal: true });
   }
@@ -46,6 +51,24 @@ class Header extends Component {
   handleCloseModal() {
     this.setState({ showModal: false });
     this.setState({ name: '' });
+  }
+
+  handleOpenRandomCheckModal() {
+    this.setState({ checkModal: true });
+  }
+
+  handleCloseRandomCheckModal() {
+    this.setState({ checkModal: false });
+  }
+
+  handleRandomCheck() {
+    const { data } = this.props;
+    console.log('datat', data)
+    if (data.length < 4) {
+      this.setState({ checkModal: true });
+    } else {
+      browserHistory.push('/match');
+    }
   }
 
   render() {
@@ -63,14 +86,12 @@ class Header extends Component {
               Add
             </button>
           </Link>
-          <Link to={'/match'}>
             <button
               className="btn"
-              onClick={this.getAllData}
+              onClick={this.handleRandomCheck}
               >
               Random
             </button>
-          </Link>
           <Link to={'/'}>
             <button
               className="btn"
@@ -105,6 +126,17 @@ class Header extends Component {
               <input type="submit" value="Submit" />
             </form>
           </ReactModal>
+          <ReactModal
+            className="random_check_modal"
+            overlayClassName="overlay"
+            isOpen={this.state.checkModal}
+            onRequestClose={this.handleCloseRandomCheckModal}
+            contentLabel="Modal"
+          >
+            <h3>
+              4명 이상이 되어야 합니다.
+            </h3>
+          </ReactModal>
         </div>
         {this.props.children}
       </div>
@@ -112,10 +144,14 @@ class Header extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  data: state.getDataReducer.data,
+});
+
 const mapDispatchToProps = dispatch => ({
   getDataFunc: () => { dispatch(getDataAction.getDataFunc()); },
   addDataFunc: (name) => { dispatch(addDataAction.addDataFunc(name)); },
   deletePeople: () => { dispatch(deleteDataAction.deletePeopleFunc()); },
 });
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

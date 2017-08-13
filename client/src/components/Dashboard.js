@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as getDataAction from '../action/getDataAction';
-import getDataReducer from '../reducer/getDataReducer';
 import * as deleteDataAction from '../action/deleteDataAction';
 
 class Dashboard extends Component {
