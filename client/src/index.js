@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import thunk from 'redux-thunk';
+import * as Components from './components';
 import App from './components/App';
 import reducer from './reducer';
 
@@ -16,9 +19,16 @@ const store = createStore(
 
 store.subscribe(() => console.log(store.getState()));
 
+const history = syncHistoryWithStore(browserHistory, store);
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={history}>
+      <Router path="/" component={Components.Header}>
+        <IndexRoute component={Components.Dashboard} />
+        <Route path="match" component={Components.Match} />
+      </Router>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

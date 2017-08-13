@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactModal from 'react-modal';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as getDataAction from '../action/getDataAction';
 import * as deleteDataAction from '../action/deleteDataAction';
@@ -50,26 +51,34 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        Header
+        <Link to={'/'}>
+          Header
+        </Link>
         <div className="button">
-          <button
-            className="btn"
-            onClick={this.handleOpenModal}
-          >
-            Add
-          </button>
-          <button
-            className="btn"
-            onClick={this.getAllData}
-          >
-            Random
-          </button>
-          <button
-            className="btn"
-            onClick={this.props.deletePeople}
-          >
-            Reset
-          </button>
+          <Link to={'/'}>
+            <button
+              className="btn"
+              onClick={this.handleOpenModal}
+              >
+              Add
+            </button>
+          </Link>
+          <Link to={'/match'}>
+            <button
+              className="btn"
+              onClick={this.getAllData}
+              >
+              Random
+            </button>
+          </Link>
+          <Link to={'/'}>
+            <button
+              className="btn"
+              onClick={this.props.deletePeople}
+              >
+              Reset
+            </button>
+          </Link>
         </div>
         <div>
           <ReactModal
@@ -97,6 +106,7 @@ class Header extends Component {
             </form>
           </ReactModal>
         </div>
+        {this.props.children}
       </div>
     );
   }

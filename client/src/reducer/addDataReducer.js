@@ -1,21 +1,9 @@
 import * as types from '../action/ActionTypes';
 
-const initialState = {
-  members: [],
-};
-
-const addDataReducer = (state = initialState, action) => {
-  const {members} = state;
+const addDataReducer = (state = [], action) => {
   switch (action.type) {
     case types.ADD_PERSON:
-      return {
-        members: [
-          ...members,
-          {
-            name: action.name,
-          },
-        ],
-      };
+      return state;
     default:
       return state;
   }
