@@ -13,6 +13,8 @@ class Header extends Component {
       showModal: false,
       checkModal: false,
       name: '',
+      temp: '',
+      checkName: false,
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -24,16 +26,30 @@ class Header extends Component {
   }
 
   handleSubmit(e) {
-    if (this.state.name === ''){
+    const { data } = this.props;
+    if (this.state.name.trim() === ''){
       e.preventDefault();
       return;
+    }
+    for (let i = 0; i < data.length; i += 1) {
+      if (data[i].name === this.state.name) {
+        this.setState({
+          temp: this.state.name,
+        });
+        this.setState({
+          checkName: true,
+          name: '',
+        });
+        e.preventDefault();
+        return;
+      }
     }
     this.props.addDataFunc(this.state.name);
     this.setState({
       name: '',
-    });
-    this.setState({
       showModal: false,
+      temp: '',
+      checkName: false,
     });
   }
 
@@ -121,9 +137,13 @@ class Header extends Component {
                   onChange={this.handleChange}
                   name="name"
                   placeholder="Type Name"
+                  required
                 />
               </label>
               <input type="submit" value="Submit" />
+              <h3>
+                {this.state.checkName ? `${this.state.temp} 은 이미 있습니다.` : ''}
+              </h3>
             </form>
           </ReactModal>
           <ReactModal
