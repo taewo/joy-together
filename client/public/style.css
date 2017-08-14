@@ -9,6 +9,10 @@ body {
   height: 4rem;
 }
 
+.dashboard {
+  margin-top: 64px;
+}
+
 .button {
   background: green;
   display: inline-block;

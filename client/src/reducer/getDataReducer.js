@@ -1,7 +1,7 @@
 import * as types from '../action/ActionTypes';
 
 const initialState = {
-  data: []
+  data: [],
 };
 
 const getDataReducer = (state = initialState, action) => {
