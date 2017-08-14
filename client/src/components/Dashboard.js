@@ -9,8 +9,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfGroups: '',
       minGroupNumber: '',
+      numberOfGroups: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNumberOfGroups = this.handleNumberOfGroups.bind(this);
@@ -39,7 +39,7 @@ class Dashboard extends Component {
   render() {
     const { data } = this.props;
     const maxGroupMember = Math.floor(data.length/2);
-    const maxNumberOfGroup = (data.length / maxGroupMember);
+    const maxNumberOfGroup = Math.floor(data.length / this.state.minGroupNumber);
     const renderData = () => {
       if (data === undefined || data.length === 0) {
         console.log(3333333);
@@ -80,6 +80,7 @@ class Dashboard extends Component {
                 min="2"
                 max={maxGroupMember}
                 required
+                placeholder="최소 두명부터"
                 />
             </label>
             <br />
@@ -89,9 +90,10 @@ class Dashboard extends Component {
                 type="number"
                 onChange={this.handleNumberOfGroups}
                 value={this.state.numberOfGroups}
-                min="1"
+                min="2"
                 max={maxNumberOfGroup}
                 required
+                placeholder="최소 두 그룹부터"
               />
             </label>
             <input type="submit" value="생성"/>

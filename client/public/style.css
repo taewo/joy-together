@@ -76,7 +76,7 @@ body {
   color: white;
   font-size: 3rem;
   border-radius: 100%;
-  cursor: pointer;
+  /*cursor: pointer;*/
   user-select: none;
 }
 
@@ -86,11 +86,14 @@ body {
   outline: none;
   display: inline-block;
   border: solid black 1px;
-  cursor: wait;
+  cursor: pointer;
   transition: background-color 1s;
 }
 
 .matchList {
   margin-top: 50px;
+}
 
+.match {
+  border: solid 1px green;
 }

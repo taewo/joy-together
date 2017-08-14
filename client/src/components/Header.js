@@ -65,8 +65,12 @@ class Header extends Component {
   }
 
   handleCloseModal() {
-    this.setState({ showModal: false });
-    this.setState({ name: '' });
+    this.setState({
+      showModal: false,
+      name: '',
+      temp: '',
+      checkName: false,
+    });
   }
 
   handleOpenRandomCheckModal() {
@@ -91,14 +95,16 @@ class Header extends Component {
     return (
       <div className="header">
         <Link to={'/'}>
-          Header
+          <h2 style={{display: "inline-block"}}>
+            Header
+          </h2>
         </Link>
         <div className="button">
           <Link to={'/'}>
             <button
               className="btn"
               onClick={this.handleOpenModal}
-              >
+            >
               Add
             </button>
           </Link>

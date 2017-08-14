@@ -1,65 +1,85 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import shuffle from 'lodash.shuffle';
+import { browserHistory } from 'react-router';
 
 class Match extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numberOfGroups: '',
-      minGroupNumber: '',
+      data: null,
+      groupNum: 0,
+      minMember: 0,
+    };
+    this.renderMatch = this.renderMatch.bind(this);
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount');
+    const { data, groupData } = this.props;
+    if (data.length === 0 || groupData.groupNum === 0 || groupData.minMember === 0) {
+      console.log('before browserHistory push');
+      browserHistory.push('/');
+    } else {
+      this.setState({
+        data: data,
+        groupNum: groupData.groupNum,
+        minMember: groupData.minMember,
+      })
+      console.log('this.state1 ', this.state);
     }
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleNumberOfGroups = this.handleNumberOfGroups.bind(this);
-    this.handleMinGroupNumber = this.handleMinGroupNumber.bind(this);
   }
 
-  handleNumberOfGroups(e) {
-    this.setState({ numberOfGroups: e.target.value });
-  }
+  renderMatch() {
+    const { data, groupData } = this.props;
+    console.log('this.state2 ', this.state);
+    // let realResult = null;
+    if (data.length !== 0 && groupData.groupNum !== 0 && groupData.minMember !== 0) {
+      const shuffledData = shuffle(data)
+      const result = [];
+      console.log(123, shuffledData);
 
-  handleMinGroupNumber(e) {
-    this.setState({ minGroupNumber: e.target.value });
-  }
+      for (let i = 0; i < groupData.groupNum; i += 1) {
+        const arr = [];
+        for (let j = 0; j < groupData.minMember; j += 1) {
+          arr.push(shuffledData.pop());
+        }
+        result.push(arr);
+      }
 
-  handleSubmit(e) {
-    e.preventDefault();
+      while (shuffledData.length !== 0) {
+        const random = Math.floor(Math.random() * groupData.groupNum);
+        console.log('random', random)
+        console.log('result', result);
+        result[random].push(shuffledData.pop());
+      }
+      console.log(123123, result);
+
+
+      console.log(9999)
+      return result.map((data, i) => {
+        return (
+          <div key={i} className="match">
+            {data.map((data, i) => {
+              return (
+                <div key={i}>
+                  {data.name}
+                </div>
+              )
+            })}
+          </div>
+        )
+      })
+    }
   }
 
   render() {
-    const matchResult = () => {
-      const { data } = this.props;
-      const dividend = data.length;
-      const divisor = Math.floor(Math.random() * (data.length/2));
-    }
     return (
       <div className="matchList">
         <h1>
           Match
         </h1>
-        <form
-          onSubmit={this.handleSubmit}
-        >
-          <label>
-            그룹의 수 :
-            <input
-              type="number"
-              onChange={this.handleNumberOfGroups}
-              value={this.state.numberOfGroups}
-            />
-          </label>
-          <br />
-          <label>
-            그룹최소 인원 :
-            <input
-              type="number"
-              value={this.state.minGroupNumber}
-              onChange={this.handleMinGroupNumber}
-            />
-          </label>
-          <input
-            type="submit"
-          />
-        </form>
+          {this.renderMatch()}
       </div>
     );
   }
@@ -67,6 +87,7 @@ class Match extends Component {
 
 const mapStateToProps = state => ({
   data: state.getDataReducer.data,
+  groupData: state.makeGroupReducer.groupData,
 });
 
 export default connect(mapStateToProps, null)(Match);
