@@ -14,7 +14,6 @@ export function addDataFunc(name) {
       name,
     })
     .then((res) => {
-      console.log('Add data success', res.data);
       dispatch(addData(name));
       dispatch(getDataAction.getDataFunc());
     })

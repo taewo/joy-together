@@ -59,7 +59,6 @@ class Header extends Component {
     });
   }
 
-
   handleOpenModal() {
     this.setState({ showModal: true });
   }
@@ -83,7 +82,6 @@ class Header extends Component {
 
   handleRandomCheck() {
     const { data } = this.props;
-    console.log('datat', data)
     if (data.length < 4) {
       this.setState({ checkModal: true });
     } else {
@@ -95,7 +93,7 @@ class Header extends Component {
     return (
       <div className="header">
         <Link to={'/'}>
-          <h2 style={{display: "inline-block"}}>
+          <h2 style={{ display: "inline-block" }}>
             Header
           </h2>
         </Link>
@@ -114,14 +112,19 @@ class Header extends Component {
               >
               Random
             </button>
-          <Link to={'/'}>
+
             <button
               className="btn"
-              onClick={this.props.deletePeople}
+              onClick={
+                () => {
+                  this.props.deletePeople();
+                  browserHistory.push('/');
+                }
+              }
               >
               Reset
             </button>
-          </Link>
+
         </div>
         <div>
           <ReactModal

@@ -14,7 +14,7 @@ const makeGroupReducer = (state = initialState, action) => {
         groupData: {
           groupNum: action.groupNum,
           minMember: action.minMember,
-        }
+        },
       };
     default:
       return state;

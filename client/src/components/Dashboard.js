@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
+import Spinner from 'react-spinkit';
 import * as getDataAction from '../action/getDataAction';
 import * as deleteDataAction from '../action/deleteDataAction';
 import * as makeGroupAction from '../action/makeGroupAction';
@@ -11,14 +12,18 @@ class Dashboard extends Component {
     this.state = {
       minGroupNumber: '',
       numberOfGroups: '',
+      spinner: true,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNumberOfGroups = this.handleNumberOfGroups.bind(this);
     this.handleMinGroupNumber = this.handleMinGroupNumber.bind(this);
   }
+
   componentDidMount() {
-    console.log('componentDidMount');
     this.props.getDataFunc();
+    setTimeout(() => {
+      this.setState({ spinner: false });
+    }, 500);
   }
 
   handleNumberOfGroups(e) {
@@ -30,7 +35,6 @@ class Dashboard extends Component {
   }
 
   handleSubmit(e) {
-    console.log('state', this.state.numberOfGroups, this.state.minGroupNumber)
     this.props.makeGroupFunc(this.state.numberOfGroups, this.state.minGroupNumber);
     browserHistory.push('/match');
     e.preventDefault();
@@ -38,11 +42,10 @@ class Dashboard extends Component {
 
   render() {
     const { data } = this.props;
-    const maxGroupMember = Math.floor(data.length/2);
+    const maxGroupMember = Math.floor(data.length / 2);
     const maxNumberOfGroup = Math.floor(data.length / this.state.minGroupNumber);
     const renderData = () => {
       if (data === undefined || data.length === 0) {
-        console.log(3333333);
         return (
           <h3>
             Empty Data
@@ -67,42 +70,53 @@ class Dashboard extends Component {
         });
       }
     };
+    const renderPage = () => {
+      if (this.state.spinner) {
+        return (
+          <Spinner name="ball-scale-multiple" color="orange" fadeIn="none" />
+        );
+      } else {
+        return (
+          <div className="dashboard">
+            <div className="setting">
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  그룹최소 인원 :
+                  <input
+                    type="number"
+                    value={this.state.minGroupNumber}
+                    onChange={this.handleMinGroupNumber}
+                    min="2"
+                    max={maxGroupMember}
+                    required
+                    placeholder="최소 두명부터"
+                  />
+                </label>
+                <br />
+                <label>
+                  그룹의 수 :
+                  <input
+                    type="number"
+                    onChange={this.handleNumberOfGroups}
+                    value={this.state.numberOfGroups}
+                    min="2"
+                    max={maxNumberOfGroup}
+                    required
+                    placeholder="최소 두 그룹부터"
+                  />
+                </label>
+                <input type="submit" value="생성" />
+              </form>
+            </div>
+            <div className="personList">
+              {renderData()}
+            </div>
+          </div>
+        );
+      }
+    };
     return (
-      <div className="dashboard">
-        <div className="setting">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              그룹최소 인원 :
-              <input
-                type="number"
-                value={this.state.minGroupNumber}
-                onChange={this.handleMinGroupNumber}
-                min="2"
-                max={maxGroupMember}
-                required
-                placeholder="최소 두명부터"
-                />
-            </label>
-            <br />
-            <label>
-              그룹의 수 :
-              <input
-                type="number"
-                onChange={this.handleNumberOfGroups}
-                value={this.state.numberOfGroups}
-                min="2"
-                max={maxNumberOfGroup}
-                required
-                placeholder="최소 두 그룹부터"
-              />
-            </label>
-            <input type="submit" value="생성"/>
-          </form>
-        </div>
-        <div className="personList">
-          {renderData()}
-        </div>
-      </div>
+      renderPage()
     );
   }
 }

@@ -1,5 +1,5 @@
-import * as types from './ActionTypes';
 import axios from 'axios';
+import * as types from './ActionTypes';
 import { API_URL } from '../config';
 import * as getDataAction from './getDataAction';
 
@@ -7,13 +7,12 @@ export const deletePeople = () => ({
   type: types.DELETE_PEOPLE,
 });
 
-export const deletePerson = (name) => ({
+export const deletePerson = name => ({
   type: types.DELETE_PERSON,
   name,
 });
 
 export function deletePersonFunc(name) {
-  console.log('name', name)
   return (dispatch) => {
     return axios({
       url: `${API_URL}/persons`,
