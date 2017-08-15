@@ -15,6 +15,7 @@ class Header extends Component {
       name: '',
       temp: '',
       checkName: false,
+      groupSetting: true,
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -25,9 +26,13 @@ class Header extends Component {
     this.handleRandomCheck = this.handleRandomCheck.bind(this);
   }
 
+  componentWillUnmount() {
+    // this.setState({ groupSetting: true });
+  }
+
   handleSubmit(e) {
     const { data } = this.props;
-    if (this.state.name.trim() === ''){
+    if (this.state.name.trim() === '') {
       e.preventDefault();
       return;
     }
@@ -35,8 +40,6 @@ class Header extends Component {
       if (data[i].name === this.state.name) {
         this.setState({
           temp: this.state.name,
-        });
-        this.setState({
           checkName: true,
           name: '',
         });
@@ -81,10 +84,20 @@ class Header extends Component {
   }
 
   handleRandomCheck() {
-    const { data } = this.props;
+    const { data, groupData } = this.props;
     if (data.length < 4) {
-      this.setState({ checkModal: true });
+      this.setState({
+        groupSetting: true,
+        checkModal: true,
+      })
+      // this.setState({ checkModal: true });
+    } else if (groupData.groupNum == 0 || groupData.minMember == 0) {
+      this.setState({
+        groupSetting: false,
+        checkModal: true,
+      });
     } else {
+      this.setState({ groupSetting: true });
       browserHistory.push('/match');
     }
   }
@@ -118,6 +131,7 @@ class Header extends Component {
               onClick={
                 () => {
                   this.props.deletePeople();
+                  this.setState({ groupSetting: true });
                   browserHistory.push('/');
                 }
               }
@@ -163,7 +177,7 @@ class Header extends Component {
             contentLabel="Modal"
           >
             <h3>
-              4명 이상이 되어야 합니다.
+              {this.state.groupSetting ? '4명 이상이 되어야 합니다.' : '그룹 생성 조건을 채워주세요'}
             </h3>
           </ReactModal>
         </div>
@@ -175,6 +189,7 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   data: state.getDataReducer.data,
+  groupData: state.makeGroupReducer.groupData,
 });
 
 const mapDispatchToProps = dispatch => ({

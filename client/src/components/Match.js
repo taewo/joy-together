@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import shuffle from 'lodash.shuffle';
 import { browserHistory } from 'react-router';
+import { makeGroup } from '../action/makeGroupAction';
 
 class Match extends Component {
   constructor(props) {
@@ -15,6 +16,10 @@ class Match extends Component {
       console.log('before browserHistory push');
       browserHistory.push('/');
     }
+  }
+
+  componentWillUnmount() {
+    this.props.initMakeGroupData(0, 0);
   }
 
   renderMatch() {
@@ -69,4 +74,8 @@ const mapStateToProps = state => ({
   groupData: state.makeGroupReducer.groupData,
 });
 
-export default connect(mapStateToProps, null)(Match);
+const mapDispatchToProps = dispatch => ({
+  initMakeGroupData: (groupNum, minMember) => { dispatch(makeGroup(groupNum, minMember)); },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Match);
