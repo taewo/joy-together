@@ -91,7 +91,7 @@ class Header extends Component {
         checkModal: true,
       })
       // this.setState({ checkModal: true });
-    } else if (groupData.groupNum == 0 || groupData.minMember == 0) {
+    } else if (groupData.groupNum === 0 || groupData.minMember === 0) {
       this.setState({
         groupSetting: false,
         checkModal: true,
@@ -106,28 +106,27 @@ class Header extends Component {
     return (
       <div className="header">
         <Link to={'/'}>
-          <h2 style={{ display: "inline-block" }}>
-            Header
-          </h2>
+          <h1 className="header_title">
+            Joy Together
+          </h1>
         </Link>
         <div className="button">
           <Link to={'/'}>
             <button
-              className="btn"
+              className="btn add"
               onClick={this.handleOpenModal}
             >
               Add
             </button>
           </Link>
             <button
-              className="btn"
+              className="btn random"
               onClick={this.handleRandomCheck}
               >
               Random
             </button>
-
             <button
-              className="btn"
+              className="btn reset"
               onClick={
                 () => {
                   this.props.deletePeople();
@@ -135,50 +134,51 @@ class Header extends Component {
                   browserHistory.push('/');
                 }
               }
-              >
+            >
               Reset
             </button>
-
         </div>
         <div>
           <ReactModal
             className="modal"
-            overlayClassName="overlay"
             isOpen={this.state.showModal}
             onRequestClose={this.handleCloseModal}
             contentLabel="Modal"
           >
-            <form
-              onSubmit={this.handleSubmit}
-            >
-              <label>
-                Name:
-                <input
-                  autoFocus
-                  type="text"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  name="name"
-                  placeholder="Type Name"
-                  required
-                />
-              </label>
-              <input type="submit" value="Submit" />
-              <h3>
-                {this.state.checkName ? `${this.state.temp} 은 이미 있습니다.` : ''}
-              </h3>
-            </form>
+            <div className="modal_content">
+              <form
+                onSubmit={this.handleSubmit}
+              >
+                <label>
+                  <h2>
+                    함께 <span style={{fontSize:"22px"}}>Joy</span> 할 분의 이름을 적어주세요!
+                  </h2>
+                  <input
+                    autoFocus
+                    type="text"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    name="name"
+                    placeholder="Type Name"
+                    required
+                  />
+                </label>
+                <input type="submit" value="Submit" />
+                <h3>
+                  {this.state.checkName ? `${this.state.temp} 은(는) 이미 있습니다.` : ''}
+                </h3>
+              </form>
+            </div>
           </ReactModal>
           <ReactModal
             className="random_check_modal"
-            overlayClassName="overlay"
             isOpen={this.state.checkModal}
             onRequestClose={this.handleCloseRandomCheckModal}
             contentLabel="Modal"
           >
-            <h3>
+            <h1 className="modal_warning_text">
               {this.state.groupSetting ? '4명 이상이 되어야 합니다.' : '그룹 생성 조건을 채워주세요'}
-            </h3>
+            </h1>
           </ReactModal>
         </div>
         {this.props.children}
