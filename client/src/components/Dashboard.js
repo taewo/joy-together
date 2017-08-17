@@ -105,7 +105,7 @@ class Dashboard extends Component {
           <div className="dashboard">
             <div className="setting">
               <form onSubmit={this.handleSubmit}>
-                  희망 그룹 개수
+                최소 그룹 인원
                   <input
                     type="number"
                     value={this.state.minGroupNumber}
@@ -118,7 +118,7 @@ class Dashboard extends Component {
 
                 <br />
                 <div>
-                  최소 그룹 인원
+                  희망 그룹 개수
                   <input
                     type="number"
                     value={this.state.numberOfGroups}
