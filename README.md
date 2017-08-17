@@ -26,18 +26,26 @@ Git clone:
 $ git clone https://github.com/taewo/joy-together.git
 ```
 - - -
-Client side webpack-dev server
+Client side webpack-dev server (port:3000)
 ```sh
 $ cd joy-together/client
+```
+Npm install
+```sh
+$ npm install
 ```
 ```sh
 $ npm start
 ```
 Click <a href="http://localhost:3000/" target="_blank">Joy-Together</a>
 - - -
-Express API server
+Server side Express API server (port:4000)
 ```sh
 $ cd joy-together/server
+```
+Npm install
+```sh
+$ npm install
 ```
 ```sh
 $ nodemon app.js
