@@ -116,14 +116,14 @@ class Header extends Component {
               className="btn add"
               onClick={this.handleOpenModal}
             >
-              Add
+              Add Name
             </button>
           </Link>
             <button
               className="btn random"
               onClick={this.handleRandomCheck}
               >
-              Random
+              Make Group
             </button>
             <button
               className="btn reset"
