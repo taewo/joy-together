@@ -14,6 +14,7 @@
 
 - [React](https://facebook.github.io/react/): A Javascript library for building user interfaces
 - [Redux](http://redux.js.org/): A predictable state container for JavaScript apps
+- [create-react-app](https://github.com/facebookincubator/create-react-app): Create React apps with no build configuration.
 - [React-router](https://reacttraining.com/react-router/): Declarative routing for React
 - [Express](http://expressjs.com): Fast, unopinionated, minimal web framework for [Node](https://nodejs.org)
 - [Mongoose](http://mongoosejs.com): Elegant mongodb object modeling for [Node](https://nodejs.org)
@@ -32,7 +33,7 @@ $ cd joy-together/client
 ```sh
 $ npm start
 ```
-Click <a href="http://localhost:3000/" target="_blank">Joy-Together</a> 
+Click <a href="http://localhost:3000/" target="_blank">Joy-Together</a>
 - - -
 Express API server
 ```sh
