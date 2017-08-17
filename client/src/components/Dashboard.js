@@ -56,7 +56,6 @@ class Dashboard extends Component {
       e.preventDefault();
       return;
     }
-    console.log(123123123123)
     this.props.makeGroupFunc(this.state.numberOfGroups, this.state.minGroupNumber);
     browserHistory.push('/match');
     e.preventDefault();

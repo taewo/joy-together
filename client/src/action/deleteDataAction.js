@@ -22,12 +22,11 @@ export function deletePersonFunc(name) {
       },
     })
     .then((res) => {
-      console.log('Delete Person success', res);
       dispatch(deletePerson(name));
       dispatch(getDataAction.getDataFunc());
     })
     .catch((err) => {
-      console.log('err', err);
+      console.warn('err', err);
     });
   };
 }
@@ -36,7 +35,6 @@ export function deletePeopleFunc() {
   return (dispatch) => {
     return axios.delete(`${API_URL}/people`)
     .then((res) => {
-      console.log('Delete People success', res);
       dispatch(deletePeople());
       dispatch(getDataAction.getDataFunc());
     })

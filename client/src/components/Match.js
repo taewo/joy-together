@@ -18,7 +18,6 @@ class Match extends Component {
   componentDidMount() {
     const { data, groupData } = this.props;
     if (data.length === 0 || groupData.groupNum === 0 || groupData.minMember === 0) {
-      console.log('before browserHistory push');
       browserHistory.push('/');
     }
     setTimeout(() => {

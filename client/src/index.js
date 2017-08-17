@@ -16,7 +16,7 @@ const store = createStore(
     applyMiddleware(thunk),
 ));
 
-store.subscribe(() => console.log(store.getState()));
+// store.subscribe(() => console.log(store.getState()));
 
 const history = syncHistoryWithStore(browserHistory, store);
 
