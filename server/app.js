@@ -12,7 +12,7 @@ app.use(cors());
 const port = process.env.PORT || 4000;
 
 const router = require('./routes')(app, Person);
-
+console.log('person console', Person)
 const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', () => {

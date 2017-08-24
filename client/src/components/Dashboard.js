@@ -82,7 +82,7 @@ class Dashboard extends Component {
                 className="remove_btn"
                 onClick={() => this.props.deleteDataFunc(data.name)}
                 />
-              <div className="person" style={{backgroundColor: getRandomColor()}}>
+              <div className="person" style={{backgroundColor: data.color}}>
                 {data.name}
               </div>
             </div>

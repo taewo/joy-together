@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const personSchema = new Schema({
   name: String,
+  color: String,
 });
 
 // 첫번째 인자 person 은 collection의 단수적 표현
